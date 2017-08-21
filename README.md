@@ -295,7 +295,7 @@ async function asyncFunc(param1) {
     });
 
 > **Summary**
-> This is gonna be tough.
+> ![This is gonna be tough.](https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif)
 
 
 
