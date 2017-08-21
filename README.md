@@ -15,7 +15,7 @@
 > - Single threaded
 > - Multi threaded
 
-+ Works the same both in the browser and Node
++ The behaviour of the event loop is similar in the browser and in Node.js
 + In the browsers does couple of things like:
 1. Parsing HTML
 2. Executing JavaScript code in script elements
@@ -49,7 +49,7 @@
 	}
     function second(str) {
 	    console.log(str);
-	    third("second");
+	    third("third");
 	}
     function first(str) {
 	    console.log(str);
@@ -73,7 +73,7 @@
  
 > **Terms to understand:**
 
-> - The outer world
+> - The world out there
 > - APIs to the outer world (setTimeout, fs.readFile)
 > - Web API, C++ API
 > - Asynchronous
@@ -85,7 +85,7 @@
     });
 
 > **Summary**
-> Asynchronous: I have no idea when it's gonna happen.
+> Asynchronous: I have no idea when it's going to happen.
 
 
 ----------
@@ -149,7 +149,6 @@ asyncOp1(param1, function(err, value1) {
 
 ### Promises
 
- - ES6 feature
  - Promises are objects which represent the result of an asynchronous operation.
  - One async operation -> one promise
  - Helps to avert callback hell
@@ -157,14 +156,14 @@ asyncOp1(param1, function(err, value1) {
  
  ```
  asyncOp1
-.then(asyncOp2)
-.then(asyncOp3)
-.then(function (value3) {
-	// Do something with value3
-})
-.catch(function (error) {
-    // Handle any error from all above steps
-});
+    .then(asyncOp2)
+    .then(asyncOp3)
+    .then(function (value3) {
+        // Do something with value3
+    })
+    .catch(function (error) {
+        // Handle any error from all above steps
+    });
  ```
 
 ###Generators
@@ -190,6 +189,16 @@ console.log(gen.next().value); // 1
 console.log(gen.next().value); // 3
 ```
 
+### Async functions
+```javascript
+async function asyncFunc(param1) {
+  
+    const result1 =  await firstAsyncFunc(param1);
+    
+    return await secondAsyncFunc(result1);
+}
+```
+
 ----------
 
 
@@ -208,12 +217,11 @@ console.log(gen.next().value); // 3
     })
 #### Mocked async call
 
-    sinon.stub(DbClient, "connect", function (cStr, callback) {
-    
-	    var mockedDb = {};
-    
-	    process.nextTick(function () {
-		    callback(null, mockedDb);
+    sinon.stub(testNS, "asyncMethod, (param, callback) => {
+   
+	    process.nextTick(() => {
+	    
+		    callback(null, result);
 	    });
     });
 
@@ -223,20 +231,27 @@ console.log(gen.next().value); // 3
 ####Code example
 
     class AweSome {
+    
 	    start() {
-		    DbClient.connect("foo/bar", (err, result) => {
-			    this.connected = true;
+	    
+		    testNS.asyncMethod("foo/bar", (err, result) => {
+		    
+			    this.started = true;
 		    });
 	    }
     }
 ####Test example
 
-    describe("The \"connected\" flag", () => {
-	    describe("when the start method runs and the db is up", () => {		
+    describe("The \"started\" flag", () => {
+    
+	    describe("when the start method runs", () => {	
+	    	
 		    it("should get set to true", (done) => {
+		    
 			    awesome.start();
+			    
 			    process.nextTick(() => {
-				    expect(awesome.flag).to.be.true;
+				    expect(awesome.started).to.be.true();
 				    done();
 			    });
 		    });
@@ -245,23 +260,26 @@ console.log(gen.next().value); // 3
 
 > **Things to remember**
 > 
-> - Use "done" to test something asynchronous
+> - Use "done" to test something asynchronous. Or return the promise...
 > - Make your assertion run after the asynchronous operation
 
 ### Case3 test for an event preceded by an async operation
 #### Code example
 
     class AweSome extends EventEmitter {
+    
 	    start() {
-	        DbClient.connect("foo/bar", (err, result) => {
-	            this.emit("connected", true);
+	    
+	        testNS.asyncMethod("foo/bar", (err, result) => {
+	            this.emit("started", true);
 	        });
 	    }
     }
 #### Test example
 
-    describe("The \"connected\" event", () => {
-	    describe("when the start method runs and the db is up", () => {
+    describe("The \"started\" event", () => {
+    
+	    describe("when the start method runs", () => {
 	        
 	        it("should get emitted with true value", (done) => {
 
@@ -270,8 +288,8 @@ console.log(gen.next().value); // 3
 					done();
 				}
 
-				awesome.on("connected", assertion)
-				awesome.start()
+				awesome.on("started", assertion)
+				awesome.start();
 	        });
 	    });
     });
