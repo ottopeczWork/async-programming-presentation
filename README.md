@@ -294,9 +294,9 @@ async function asyncFunc(param1) {
 	    });
     });
 
-> **Summary**
+**Summary**
 
-> ![This is gonna be tough.](https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif)
+![This is gonna be tough.](https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif)
 
 
 
