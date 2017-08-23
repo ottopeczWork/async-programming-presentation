@@ -301,7 +301,7 @@ async function asyncFunc(param1) {
 
 ![Node.js Event Loop](NodejsEventLoop.png)
 
-![Phases](Phases.png);
+![Phases](Phases.png)
 
 **Summary**
 
