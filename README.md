@@ -2,9 +2,10 @@
 
 
 ## Topics
-+ Event loop
++ Abstract event loop
 + Programming techniques
-+ Caveats in testing
++ Problems in testing
++ Node.js event loop
 
 ### Event loop
 + Handles concurrency for JavaScript. It's more like a strategy but some people call the browser thread which manages a tab "The event loop"
@@ -260,7 +261,7 @@ async function asyncFunc(param1) {
 
 > **Things to remember**
 > 
-> - Use "done" to test something asynchronous. Or return the promise...
+> - Return the promise when you test something promise based. Use done whe you test something callback based.
 > - Make your assertion run after the asynchronous operation
 
 ### Case3 test for an event preceded by an async operation
@@ -293,8 +294,13 @@ async function asyncFunc(param1) {
 	        });
 	    });
     });
+    
+## Node.js Event Loop
++ Is Node.js single-threaded or multi-threaded?
++ The internet is wrong about the Node.js event loop.
 
 **Summary**
+![Node.js Event Loop](NodejsEventLoop.png)
 
 ![This is gonna be tough.](https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif)
 
