@@ -300,7 +300,7 @@ async function asyncFunc(param1) {
 + The internet is wrong about the Node.js event loop.
 
 **Summary**
-![Node.js Event Loop](NodejsEventLoop.png)
+![Node.js Event Loop](https://www.dropbox.com/s/njmyi3oh3nfjwa8/NodejsEventLoop.png?dl=0)
 
 ![This is gonna be tough.](https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif)
 
