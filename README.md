@@ -27,7 +27,7 @@
 <img src="http://4.bp.blogspot.com/-MYY3w4Y_lAg/VCHi63G4DGI/AAAAAAAAA3c/FrbGjnJbPnQ/s1600/event_loop.jpg" width="700px"/>
 
 > **Terms to understand:**
-
+>
 > - [Blocking code](http://rauschma.github.io/async-examples/blocking.html)
     function sleep(milliseconds) {
 		var start = Date.now();
@@ -60,23 +60,25 @@
 	first("first");
 	
 > **Terms to understand:**
-
+>
 > - Callstack
 > - Run-to-completion (non breakable)
 
 #### Example2
 
     console.log("first");
+    
     setTimeout(function timeoutCallback() {
 	    console.log("second");
     }, 0);
+    
     console.log("third");
 
  
 > **Terms to understand:**
-
+>
 > - The world out there
-> - APIs to the outer world (setTimeout, fs.readFile)
+> - APIs to the outer world (setTimeout, fs.readFile, DOM API)
 > - Web API, C++ API
 > - Asynchronous
 
@@ -138,15 +140,14 @@
 > - Pyramid of Doom
 > - Cowhead
 
-```
-asyncOp1(param1, function(err, value1) {
-	asyncOp2(param2, function(err, value2) {
-		asyncOp3(param3, function(err, value3) {	
-		// Do something with value3
+
+    asyncOp1(param1, function(err, value1) {
+        asyncOp2(param2, function(err, value2) {
+            asyncOp3(param3, function(err, value3) {	
+            // Do something with value3
+            });
         });
     });
-});
-```
 
 
 ### Promises
@@ -156,50 +157,48 @@ asyncOp1(param1, function(err, value1) {
  - Helps to avert callback hell
  - Helps to control the flow
  
- ```
- asyncOp1
-    .then(asyncOp2)
-    .then(asyncOp3)
-    .then(function (value3) {
-        // Do something with value3
-    })
-    .catch(function (error) {
-        // Handle any error from all above steps
-    });
- ```
 
-###Generators
+    asyncOp1
+        .then(asyncOp2)
+        .then(asyncOp3)
+        .then(function (value3) {
+            // Do something with value3
+        })
+        .catch(function (error) {
+            // Handle any error from all above steps
+        });
+
+
+### Generators
 
  - ES6 feature
  - Generators, are functions that can be paused and resumed.
 
-    
-```
-function* idMaker() {
 
-  let  index = 0;
+    function* idMaker() {
 
-  while(true) {
-    yield index++;
-  }
-}
+       let  index = 0;
+
+       while(true) {
+           yield index++;
+       }
+    }
 
 const gen = idMaker();
 
 console.log("value": gen.next().value); // 0
 console.log(gen.next().value); // 1
-console.log(gen.next().value); // 3
-```
+
 
 ### Async functions
-```javascript
-async function asyncFunc(param1) {
+
+    async function asyncFunc(param1) {
   
-    const result1 =  await firstAsyncFunc(param1);
+        const result1 =  await firstAsyncFunc(param1);
     
-    return await secondAsyncFunc(result1);
-}
-```
+        return await secondAsyncFunc(result1);
+    }
+
 
 ----------
 
@@ -213,12 +212,12 @@ async function asyncFunc(param1) {
 
 ### Case1: mocking an asynchronous operation
 
-#### Async call
+    // Async call
     DbClient.connect(connectString, function (err, db) {
 	    // Do something with db
     })
-#### Mocked async call
-
+    
+    // Mocked async call
     sinon.stub(testNS, "asyncMethod, (param, callback) => {
    
 	    process.nextTick(() => {
@@ -229,8 +228,10 @@ async function asyncFunc(param1) {
 
 > **Note:**
 > If you create a mock/stub for an async operation make that mock asynchronous. Like always...
-###Case2: test something asynchronous
-####Code example
+
+### Case2: test something asynchronous
+
+#### Code example
 
     class AweSome {
     
@@ -242,8 +243,10 @@ async function asyncFunc(param1) {
 		    });
 	    }
     }
-####Test example
+    
+#### Test example
 
+    //  Anti-pattern DO NOT DO IT
     describe("The \"started\" flag", () => {
     
 	    describe("when the start method runs", () => {	
@@ -265,7 +268,8 @@ async function asyncFunc(param1) {
 > - Return the promise when you test something promise based. Use done whe you test something callback based.
 > - Make your assertion run after the asynchronous operation
 
-### Case3 test for an event preceded by an async operation
+### Case3 test for an event created by an async operation
+
 #### Code example
 
     class AweSome extends EventEmitter {
@@ -277,6 +281,7 @@ async function asyncFunc(param1) {
 	        });
 	    }
     }
+    
 #### Test example
 
     describe("The \"started\" event", () => {
@@ -296,7 +301,16 @@ async function asyncFunc(param1) {
 	    });
     });
     
+----------
+
+
+----------
+
+
+----------
+    
 ## Node.js Event Loop
+
 + Is Node.js single-threaded or multi-threaded?
 + The internet is wrong about the Node.js event loop.
 
@@ -364,14 +378,14 @@ async function asyncFunc(param1) {
 
 ### Main contributors
 
-+ Bert Belder - @piscisaureus
-+ Ben Noordhuis - @bnoordhuis
-+ Saúl Ibarra Corretgé - @saghul
-+ Fedor Indutny - @indutny
-+ Colin Ihrig - @cjihrig
-+ Imran Iqbal - @iWuzHere
-+ Santi Gimeno - @santigimeno
-+ +1 [Sam Roberts](https://github.com/sam-github)
+1. Bert Belder - @piscisaureus
+2. Sam Roberts - @octetcloud
+3. Saúl Ibarra Corretgé - @saghul
+4. Ben Noordhuis - @bnoordhuis
+5. Fedor Indutny - @indutny
+6. Colin Ihrig - @cjihrig
+7. Imran Iqbal - @iWuzHere
+8. Santi Gimeno - @santigimeno
 
 # Summary
 
