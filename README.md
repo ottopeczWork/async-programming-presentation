@@ -299,8 +299,11 @@ async function asyncFunc(param1) {
 + Is Node.js single-threaded or multi-threaded?
 + The internet is wrong about the Node.js event loop.
 
-**Summary**
 ![Node.js Event Loop](NodejsEventLoop.png)
+
+![Phases](Phases.png);
+
+**Summary**
 
 ![This is gonna be tough.](https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif)
 
