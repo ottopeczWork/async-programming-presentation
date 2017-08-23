@@ -1,13 +1,14 @@
-# Asynchronous programming in JavaScript
-
+# Asynchronous programming in JavaScript and the event loop
 
 ## Topics
+
 + Abstract event loop
 + Programming techniques
 + Problems in testing
 + Node.js event loop
 
-### Event loop
+### Abstract event loop
+
 + Handles concurrency for JavaScript. It's more like a strategy but some people call the browser thread which manages a tab "The event loop"
 
 > **Terms to understand:**
@@ -301,9 +302,78 @@ async function asyncFunc(param1) {
 
 ![Node.js Event Loop](NodejsEventLoop.png)
 
++ "Script" phase - The initial callstack
++ "App" phase - When the event loop starts ticking
++ Exit
++ Phases
+
 ![Phases](Phases.png)
 
-**Summary**
++ timers: Callbacks scheduled by setTimeout() and setInterval().
++ I/O callbacks: Callbacks with the exception of close callbacks, the ones scheduled by timers, and setImmediate().
++ idle, prepare: only used internally.
++ poll: retrieve new I/O events; Like new sockets for connections or data from file access. node will block here when appropriate. 
++ check: setImmediate() callbacks.
++ close: close callbacks: e.g. socket.on('close', ...). House keeping.
++ look at the source code: [libuv](https://github.com/libuv/libuv)
+
+### The poll phase - where the magic happens
+
++ Implementations are different for each runtime
++ linux: epoll
++ bsd: kqueue
++ windows: GetQueuedCompletionStatusEx
+
+1. Puts the main thread in sleep
+2. Starts polling for system events
+3. Wakes up if either there is a direct event coming from the kernel or the thread pool is done with something or the next timer expires
+
+### The thread pool
+
+#### Directly pollables
+
++ sockets (net/dgram/http/tls/https)
++ timers (setTimeout, setInterval, setImmediate)
++ dns (except dns.lookup)
++ signals
++ child processes
+
+#### Not directly pollables (pollables with thread and self pipe)
+
++ fs
++ dns.lookup
++ some crypto methods
++ http.get with domain names
+
+#### thread pool size
+
++ default 4 workers
++ UV_THREADPOOL_SIZE environmental variable
+
+### C++ Addons
+
++ Dangerous - you can do anything
++ You can access system services directly - blocking
++ You may overuse the thread pool
+
+### How to research the event loop
+
++ Look for resources created by the main contributors
++ Avoid presentations like this
++ Look at the code
+
+### Main contributors
+
++ Bert Belder - @piscisaureus
++ Ben Noordhuis - @bnoordhuis
++ Saúl Ibarra Corretgé - @saghul
++ Fedor Indutny - @indutny
++ Colin Ihrig - @cjihrig
++ Imran Iqbal - @iWuzHere
++ Santi Gimeno - @santigimeno
++ +1 [Sam Roberts](https://github.com/sam-github)
+
+# Summary
 
 ![This is gonna be tough.](https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif)
 
