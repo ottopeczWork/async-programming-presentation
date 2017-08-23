@@ -331,6 +331,11 @@ console.log(gen.next().value); // 1
 + close: close callbacks: e.g. socket.on('close', ...). House keeping.
 + look at the source code: [libuv](https://github.com/libuv/libuv)
 
+### process.nextTick
+
++ Run right after the particular callback is done running
++ Micro-task: process.nextTick and promise status handlers
+
 ### The poll phase - where the magic happens
 
 + Implementations are different for each runtime
@@ -339,8 +344,9 @@ console.log(gen.next().value); // 1
 + windows: GetQueuedCompletionStatusEx
 
 1. Puts the main thread in sleep
+2. Blocks for IO for the timeout of the closest due timer. (What happens if there are no timers ???)
 2. Starts polling for system events
-3. Wakes up if either there is a direct event coming from the kernel or the thread pool is done with something or the next timer expires
+3. Wakes up the main thread if either there is a direct event coming from the kernel or the thread pool is done with something or the next timer expires
 
 ### The thread pool
 
@@ -370,10 +376,24 @@ console.log(gen.next().value); // 1
 + You can access system services directly - blocking
 + You may overuse the thread pool
 
+### Examples
+
++ In index.js
+
+### What is Node.js for
+
++ Java servers - one thread per connection model. The limits of the op system
++ Node.js doesn't need threads. Very economic. Scales up spendidly
++ Node.js is for IO bound applications which need to scale up easily
+
+### What is Node.js not for
+
++ Anything computational. Anything CPU bound...
+
 ### How to research the event loop
 
-+ Look for resources created by the main contributors
 + Avoid presentations like this
++ Look for resources created by the main contributors
 + Look at the code
 
 ### Main contributors
