@@ -251,7 +251,9 @@
 
 ```javascript
     class AweSome {
+  
       doIt() {
+        
         testNS.asyncMethod({"foo": "bar"}, err => {
           
           if (!err) {
