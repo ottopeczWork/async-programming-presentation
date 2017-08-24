@@ -259,11 +259,10 @@
           if (!err) {
             
             this.done = true;
+            return;
+          }
             
-              return;
-            }
-            
-            throw err;
+          throw err;
         });
       }
     }
@@ -306,6 +305,12 @@
     doIt() {
       
       testNS.asyncMethod({"foo": "bar"}, (err, result) => {
+        
+        if (!err) {
+            
+          this.done = true;
+          return;
+        }
         
         this.emit("done", true);
       });
