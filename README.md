@@ -96,14 +96,6 @@
 > - Web API, C++ API
 > - Asynchronous
 
-#### Example3
-
-```javascript
-    $.on('button', 'click', function onClick() {
-	    console.log('You clicked the button!');
-    });
-```
-
 > **Summary**
 > Asynchronous: I have no idea when it's going to happen.
 
