@@ -233,9 +233,9 @@
     })
     
     // Mocked async call
-    sinon.stub(testNS, "asyncMethod, (param, callback) => {
+    sinon.stub(testNS, asyncMethod, (param, callback) => {
    
-	    process.nextTick(() => {
+	    setImmediate(() => {
 	    
 		    callback(null, result);
 	    });
@@ -265,7 +265,7 @@
 #### Test example
 
 ```javascript
-    //  Anti-pattern DO NOT DO IT
+    //  Anti-pattern alert - DO NOT DO IT
     describe("The \"started\" flag", () => {
     
 	    describe("when the start method runs", () => {	
