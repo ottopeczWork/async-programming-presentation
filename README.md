@@ -281,7 +281,7 @@
           
           awesome.doIt();
           
-            process.setImmediate(() => {
+            setImmediate(() => {
               
               expect(awesome.done).to.be.true();
               done();
