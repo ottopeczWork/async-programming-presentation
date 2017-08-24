@@ -324,11 +324,11 @@
           
           awesome.doIt();
           
-            setImmediate(() => {
-              
-              expect(awesome.done).to.be.true();
-              done();
-            });
+          setImmediate(() => {
+            
+            expect(awesome.done).to.be.true();
+            done();
+          });
         });
       });
     });
