@@ -149,10 +149,10 @@
 > - Cowhead
 
 ```javascript
-    asyncOp1(param1, function(err, value1) {
-        asyncOp2(param2, function(err, value2) {
-            asyncOp3(param3, function(err, value3) {	
-            // Do something with value3
+    asyncOp1(param, function(err, result1) {
+        asyncOp2(result1, function(err, result2) {
+            asyncOp3(result2, function(err, result3) {	
+            // Do something with result3
             });
         });
     });
