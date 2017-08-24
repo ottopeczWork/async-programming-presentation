@@ -37,15 +37,17 @@
 
 **A possible implementation of the event loop**
 
+```javascript
     while(queue.waitForMessage()) {
 	    queue.processNextMessage()
     }
+```
 
 [**This helps to visualise the way it works**](http://latentflip.com/loupe/)
 
 #### Example1:
 
-
+```javascript
     function third(str) {
 	    console.log(str);
 	}
@@ -58,6 +60,7 @@
 	    second("second");
 	}
 	first("first");
+```
 	
 > **Terms to understand:**
 >
@@ -66,6 +69,7 @@
 
 #### Example2
 
+```javascript
     console.log("first");
     
     setTimeout(function timeoutCallback() {
@@ -73,7 +77,7 @@
     }, 0);
     
     console.log("third");
-
+```
  
 > **Terms to understand:**
 >
@@ -84,9 +88,11 @@
 
 #### Example3
 
+```javascript
     $.on('button', 'click', function onClick() {
 	    console.log('You clicked the button!');
     });
+```
 
 > **Summary**
 > Asynchronous: I have no idea when it's going to happen.
@@ -118,14 +124,17 @@
 
 ### Continuation-passing (CPS)
 
+```javascript
     asyncOperation(arguments, function (err, result) {
 	    // Do something
     });
+```
 
 > **Terms to understand**
 > 
 > - Node style callback -> conventions
 
+```javascript
     function callback(err, result) {
 	    if (err) {
 		    return;
@@ -133,6 +142,7 @@
     }
     callback(new Error(), null);
     callback(null, result);
+```
 
 > **Terms to understand**
 > 
@@ -140,7 +150,7 @@
 > - Pyramid of Doom
 > - Cowhead
 
-
+```javascript
     asyncOp1(param1, function(err, value1) {
         asyncOp2(param2, function(err, value2) {
             asyncOp3(param3, function(err, value3) {	
@@ -148,7 +158,7 @@
             });
         });
     });
-
+```
 
 ### Promises
 
@@ -157,7 +167,7 @@
  - Helps to avert callback hell
  - Helps to control the flow
  
-
+```javascript
     asyncOp1
         .then(asyncOp2)
         .then(asyncOp3)
@@ -167,14 +177,14 @@
         .catch(function (error) {
             // Handle any error from all above steps
         });
-
+```
 
 ### Generators
 
  - ES6 feature
  - Generators, are functions that can be paused and resumed.
 
-
+```javascript
     function* idMaker() {
 
        let  index = 0;
@@ -183,6 +193,8 @@
            yield index++;
        }
     }
+    
+```
 
 const gen = idMaker();
 
@@ -192,13 +204,14 @@ console.log(gen.next().value); // 1
 
 ### Async functions
 
+```javascript
     async function asyncFunc(param1) {
   
         const result1 =  await firstAsyncFunc(param1);
     
         return await secondAsyncFunc(result1);
     }
-
+```
 
 ----------
 
@@ -212,6 +225,7 @@ console.log(gen.next().value); // 1
 
 ### Case1: mocking an asynchronous operation
 
+```javascript
     // Async call
     DbClient.connect(connectString, function (err, db) {
 	    // Do something with db
@@ -225,6 +239,7 @@ console.log(gen.next().value); // 1
 		    callback(null, result);
 	    });
     });
+```
 
 > **Note:**
 > If you create a mock/stub for an async operation make that mock asynchronous. Like always...
@@ -233,6 +248,7 @@ console.log(gen.next().value); // 1
 
 #### Code example
 
+```javascript
     class AweSome {
     
 	    start() {
@@ -243,9 +259,11 @@ console.log(gen.next().value); // 1
 		    });
 	    }
     }
+ ```
     
 #### Test example
 
+```javascript
     //  Anti-pattern DO NOT DO IT
     describe("The \"started\" flag", () => {
     
@@ -262,6 +280,7 @@ console.log(gen.next().value); // 1
 		    });
 	    });
     });
+```
 
 > **Things to remember**
 > 
@@ -272,6 +291,7 @@ console.log(gen.next().value); // 1
 
 #### Code example
 
+```javascript
     class AweSome extends EventEmitter {
     
 	    start() {
@@ -281,9 +301,11 @@ console.log(gen.next().value); // 1
 	        });
 	    }
     }
-    
+```
+
 #### Test example
 
+```javascript
     describe("The \"started\" event", () => {
     
 	    describe("when the start method runs", () => {
@@ -300,6 +322,7 @@ console.log(gen.next().value); // 1
 	        });
 	    });
     });
+```
     
 ----------
 
@@ -316,8 +339,8 @@ console.log(gen.next().value); // 1
 
 ![Node.js Event Loop](NodejsEventLoop.png)
 
-+ "Script" phase - The initial callstack
-+ "App" phase - When the event loop starts ticking
++ "Initial" mode - The initial callstack
++ "Main" mode - When the event loop starts ticking
 + Exit
 + Phases
 
