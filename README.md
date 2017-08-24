@@ -228,8 +228,8 @@
 
 ```javascript
     // Async call
-    DbClient.connect(connectString, function (err, db) {
-	    // Do something with db
+    testNS.asyncMethod(connectString, (err, db) => {
+	    // Does something io related
     })
     
     // Mocked async call
