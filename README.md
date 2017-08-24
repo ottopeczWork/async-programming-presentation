@@ -333,8 +333,8 @@
           done();
         }
         
-        awesome.on("done", assertion)
-	    awesome.start();
+        awesome.on("done", assertion);
+        awesome.doIt();
       });
     });
   });
