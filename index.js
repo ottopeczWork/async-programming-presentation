@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-// setTimeout(() => {
+// setImmediate(() => {
 //
 //   const promise = new Promise(resolve => {
 //
@@ -13,9 +13,9 @@ const fs = require("fs");
 //   process.nextTick(() => console.log("process.nextTick cb"));
 //
 //   console.log("timer cb");
-// }, 0);
+// });
 
-// setTimeout(() => {
+// setImmediate(() => {
 //
 //   const promise = new Promise(resolve => {
 //
@@ -36,18 +36,18 @@ const fs = require("fs");
 //   process.nextTick(() => console.log("process.nextTick cb"));
 //
 //   console.log("timer cb");
-// }, 0);
+// });
 
-// setTimeout(() => {
+// setImmediate(() => {
 //
 //   setTimeout(() => console.log("second timer cb"), 0);
 //
 //   process.nextTick(() => console.log("process.nextTick cb"));
 //
 //   console.log("first timer cb");
-// }, 0);
+// });
 
-// setTimeout(() => {
+// setImmediate(() => {
 //
 //   setTimeout(timestamp => {
 //
@@ -60,4 +60,34 @@ const fs = require("fs");
 //     console.log("setImmediate creating: ", timestamp);
 //     console.log("setImmediate cb running: ", new Date());
 //   }, new Date());
-// }, 0);
+// });
+
+// setImmediate(() => {
+//
+//   setTimeout(timestamp => {
+//
+//     console.log("setTimeout1 creating: ", timestamp);
+//     console.log("setTimeout1 cb running: ", new Date());
+//   }, 0, new Date());
+//
+//   setTimeout(timestamp => {
+//
+//     console.log("setTimeout2 creating: ", timestamp);
+//     console.log("setTimeout2 cb running: ", new Date());
+//   }, 0, new Date());
+// });
+
+// setImmediate(() => {
+//
+//   setImmediate(timestamp => {
+//
+//     console.log("setImmediate1 creating: ", timestamp);
+//     console.log("setImmediate1 cb running: ", new Date());
+//   }, new Date());
+//
+//   setImmediate(timestamp => {
+//
+//     console.log("setImmediate2 creating: ", timestamp);
+//     console.log("setImmediate2 cb running: ", new Date());
+//   }, new Date());
+// });
