@@ -411,6 +411,8 @@
 + Run right after the particular callback is done running
 + Micro-task: process.nextTick and promise status handlers
 
+![Microtask](Microtask.png)
+
 ### The poll phase - where the magic happens
 
 + Implementations are different for each runtime
