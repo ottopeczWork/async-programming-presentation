@@ -399,10 +399,10 @@
 
 ![Node.js Event Loop](NodejsEventLoop.png)
 
-+ "Initial" mode - The initial callstack
-+ "Main" mode - When the event loop starts ticking
++ "Initial phase"  - The initial callstack
++ "Main" phase" - When the event loop starts ticking
 + Exit
-+ Phases
++ Event loop phases
 
 ![Phases](Phases.png)
 
