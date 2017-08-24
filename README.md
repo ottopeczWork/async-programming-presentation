@@ -149,9 +149,9 @@
 > - Cowhead
 
 ```javascript
-    asyncOp1(param, function(err, result1) {
-        asyncOp2(result1, function(err, result2) {
-            asyncOp3(result2, function(err, result3) {	
+    asyncOp1(param, (err, result1) => {
+        asyncOp2(result1, (err, result2) => {
+            asyncOp3(result2, (err, result3) => {	
             // Do something with result3
             });
         });
@@ -166,13 +166,13 @@
  - Helps to control the flow
  
 ```javascript
-    asyncOp1
-        .then(asyncOp2)
-        .then(asyncOp3)
-        .then(function (value3) {
+    asyncOp1(param)
+        .then(result1 => asyncOp2(result1))
+        .then(result2 => asyncOp3(result2))
+        .then(result3 => {
             // Do something with value3
         })
-        .catch(function (error) {
+        .catch(error => {
             // Handle any error from all above steps
         });
 ```
