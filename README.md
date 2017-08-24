@@ -305,7 +305,7 @@
   
     doIt() {
       
-      testNS.asyncMethod("foo/bar", (err, result) => {
+      testNS.asyncMethod({"foo": "bar"}, (err, result) => {
         
         this.emit("done", true);
       });
