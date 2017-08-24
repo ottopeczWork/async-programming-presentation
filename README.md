@@ -206,11 +206,19 @@
     // Assuming that all the asynchronous operations return promises
     co(function* gen() {
       
-      const result1 = yield asyncCall1();
+      try {
       
-      const result2 = yield asynCall2(result1);
-      
-      const result3 = yield asynCall3(result2);
+          const result1 = yield asyncCall1();
+          
+          const result2 = yield asynCall2(result1);
+          
+          const result3 = yield asynCall3(result2);
+          
+          // Do something with result1;
+      } catch(err) {
+        
+        // Handle errors
+      }
     });
 ```
  - A possible implementation of co. Credit to dr Axel Rauschmayer [Exploring ES6](http://exploringjs.com/es6/ch_generators.html#sec_generators-as-coroutines)
