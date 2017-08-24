@@ -136,9 +136,7 @@
 
 ```javascript
     function callback(err, result) {
-	    if (err) {
-		    return;
-	    }
+      // Does something
     }
     callback(new Error(), null);
     callback(null, result);
@@ -201,6 +199,44 @@
     
     console.log("value": gen.next().value); // 0
     console.log(gen.next().value); // 1
+```
+ - Cooperative multitasking
+ 
+```javascript
+    // Assuming that all the asynchronous operations return promises
+    co(function* gen() {
+      
+      const result1 = yield asyncCall1();
+      
+      const result2 = yield asynCall2(result1);
+      
+      const result3 = yield asynCall3(result2);
+    });
+```
+ - A possible implementation of co. Credit to dr Axel Rauschmayer [Exploring ES6](http://exploringjs.com/es6/ch_generators.html#sec_generators-as-coroutines)
+
+```javascript
+  function co(genFunc) {
+  
+    const genObj = genFunc();
+    
+    function step({value, done}) {
+      
+      if (!done) {
+        
+        // A Promise was yielded
+        value
+          .then(result => {
+            step(genObj.next(result));
+          })
+          .catch(error => {
+            step(genObj.throw(error));
+          });
+      }
+    }
+    
+    step(genObj.next());
+  }
 ```
 
 ### Async functions
