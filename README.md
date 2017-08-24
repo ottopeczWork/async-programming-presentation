@@ -228,7 +228,7 @@
 
 ```javascript
     // Async call
-    testNS.asyncMethod(connectString, (err, db) => {
+    testNS.asyncMethod({"foo": "bar"}, (err, result) => {
 	    // Does something io related
     })
     
