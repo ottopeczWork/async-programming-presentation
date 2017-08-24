@@ -206,12 +206,12 @@
 ### Async functions
 
 ```javascript
-    async function asyncFunc(param1) {
+  async function asyncFunc(param1) {
   
-        const result1 =  await firstAsyncFunc(param1);
+    const result1 =  await firstAsyncFunc(param1);
     
-        return await secondAsyncFunc(result1);
-    }
+    return await secondAsyncFunc(result1);
+  }
 ```
 
 ----------
@@ -229,16 +229,16 @@
 ```javascript
     // Async call
     testNS.asyncMethod({"foo": "bar"}, (err, result) => {
-	    // Does something io related
+      // Does something io related
     })
     
     // Mocked async call
     sinon.stub(testNS, asyncMethod, (param, callback) => {
-   
-	    setImmediate(() => {
-	    
-		    callback(null, result);
-	    });
+      
+      setImmediate(() => {
+        
+        callback(null, result);
+      });
     });
 ```
 
@@ -251,14 +251,19 @@
 
 ```javascript
     class AweSome {
-    
-	    start() {
-	    
-		    testNS.asyncMethod("foo/bar", (err, result) => {
-		    
-			    this.started = true;
-		    });
-	    }
+      doIt() {
+        testNS.asyncMethod({"foo": "bar"}, err => {
+          
+          if (!err) {
+            
+            this.done = true;
+            
+              return;
+            }
+            
+            throw err;
+        });
+      }
     }
  ```
     
@@ -266,20 +271,21 @@
 
 ```javascript
     //  Anti-pattern alert - DO NOT DO IT
-    describe("The \"started\" flag", () => {
-    
-	    describe("when the start method runs", () => {	
-	    	
-		    it("should get set to true", (done) => {
-		    
-			    awesome.start();
-			    
-			    process.nextTick(() => {
-				    expect(awesome.started).to.be.true();
-				    done();
-			    });
-		    });
-	    });
+    describe("The \"done\" flag", () => {
+      
+      describe("when the doIt method runs", () => {
+        
+        it("should get set to true", (done) => {
+          
+          awesome.doIt();
+          
+            process.setImmediate(() => {
+              
+              expect(awesome.done).to.be.true();
+              done();
+            });
+        });
+      });
     });
 ```
 
@@ -293,36 +299,38 @@
 #### Code example
 
 ```javascript
-    class AweSome extends EventEmitter {
-    
-	    start() {
-	    
-	        testNS.asyncMethod("foo/bar", (err, result) => {
-	            this.emit("started", true);
-	        });
-	    }
+  class AweSome extends EventEmitter {
+  
+    doIt() {
+      
+      testNS.asyncMethod("foo/bar", (err, result) => {
+        
+        this.emit("done", true);
+      });
     }
+  }
 ```
 
 #### Test example
 
 ```javascript
-    describe("The \"started\" event", () => {
+  describe("The \"done\" event", () => {
     
-	    describe("when the start method runs", () => {
-	        
-	        it("should get emitted with true value", (done) => {
-
-				function assertion(value) {
-					expect(value).to.be.true;
-					done();
-				}
-
-				awesome.on("started", assertion)
-				awesome.start();
-	        });
-	    });
+    describe("when the done method runs", () => {
+      
+      it("should get emitted with true value", done => {
+        
+        function assertion(value) {
+          
+          expect(value).to.be.true;
+          done();
+        }
+        
+        awesome.on("done", assertion)
+	    awesome.start();
+      });
     });
+  });
 ```
     
 ----------
