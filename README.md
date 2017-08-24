@@ -196,11 +196,12 @@
     
 ```
 
-const gen = idMaker();
-
-console.log("value": gen.next().value); // 0
-console.log(gen.next().value); // 1
-
+```javascript
+    const gen = idMaker();
+    
+    console.log("value": gen.next().value); // 0
+    console.log(gen.next().value); // 1
+```
 
 ### Async functions
 
