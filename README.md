@@ -29,18 +29,25 @@
 > **Terms to understand:**
 >
 > - [Blocking code](http://rauschma.github.io/async-examples/blocking.html)
-    function sleep(milliseconds) {
-		var start = Date.now();
-	    while ((Date.now() - start) < milliseconds);
-    }
+
+```javascript
+  function sleep(milliseconds) {
+  
+    const start = Date.now();
+    
+    while ((Date.now() - start) < milliseconds);
+
+  }
+```
+
 > - I/O bound
 
 **A possible implementation of the event loop**
 
 ```javascript
-    while(queue.waitForMessage()) {
-	    queue.processNextMessage()
-    }
+  while(queue.waitForMessage()) {
+    queue.processNextMessage();
+  }
 ```
 
 [**This helps to visualise the way it works**](http://latentflip.com/loupe/)
@@ -48,18 +55,21 @@
 #### Example1:
 
 ```javascript
-    function third(str) {
-	    console.log(str);
-	}
-    function second(str) {
-	    console.log(str);
-	    third("third");
-	}
-    function first(str) {
-	    console.log(str);
-	    second("second");
-	}
-	first("first");
+  function third(str) {
+    console.log(str);
+  }
+  
+  function second(str) {
+    console.log(str);
+    third("third");
+  }
+  
+  function first(str) {
+    console.log(str);
+    second("second");
+  }
+  
+  first("first");
 ```
 	
 > **Terms to understand:**
